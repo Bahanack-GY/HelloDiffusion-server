@@ -119,7 +119,7 @@ export class MessagingService {
                 // 2. Generate QR Code Buffer if enabled
                 let qrBuffer: Buffer | null = null;
                 if (config.qrConfig?.enabled) {
-                    const verifyUrl = `${process.env.APP_URL || 'http://localhost:5173'}/verify/${savedInvitation.id}`;
+                    const verifyUrl = `${process.env.APP_URL || 'https://campagne.hellodiffusion.online'}/verify/${savedInvitation.id}`;
                     qrBuffer = await QRCode.toBuffer(verifyUrl, { width: 500 }); // Generate high-res for downscaling
                 }
 
