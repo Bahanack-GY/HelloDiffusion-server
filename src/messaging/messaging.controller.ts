@@ -17,6 +17,11 @@ export class MessagingController {
     findAll() {
         return this.messagingService.findAll();
     }
+
+    @Get('stats')
+    getStats() {
+        return this.messagingService.getStats();
+    }
     @Post('send-flyer')
     @UseInterceptors(FileInterceptor('file'))
     async sendFlyer(

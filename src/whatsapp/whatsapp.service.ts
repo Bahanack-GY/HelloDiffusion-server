@@ -60,8 +60,19 @@ export class WhatsappService implements OnModuleInit {
                 if (shouldReconnect) {
                     this.connectToWhatsapp();
                 } else {
-                    this.logger.error('Connection closed. You are logged out.');
-                    this.connectionStatus = 'close';
+                    this.logger.error('Connection closed. You are logged out. Cleaning up and restarting...');
+                    this.connectionStatus = 'connecting';
+
+                    // Clean up invalid session
+                    const fs = require('fs');
+                    try {
+                        fs.rmSync('auth_info_baileys', { recursive: true, force: true });
+                    } catch (e) {
+                        this.logger.error('Failed to clear auth folder', e);
+                    }
+
+                    // Restart to generate new QR
+                    this.connectToWhatsapp();
                 }
             } else if (connection === 'open') {
                 this.connectionStatus = 'open';
